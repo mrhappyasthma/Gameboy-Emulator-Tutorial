@@ -1,0 +1,52 @@
+# ==========================================
+# CMake Build Output
+# ==========================================
+build/
+build-*/
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+*.cmake.in
+# ==========================================
+# macOS System Files
+# ==========================================
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+# ==========================================
+# Xcode User Settings & Temporary Data
+# ==========================================
+# If generating Xcode via CMake, the whole build/ directory is ignored above.
+# These rules cover standalone Xcode projects if placed in project root:
+*.xcodeproj/*.mode1v3
+*.xcodeproj/*.mode2v3
+*.xcodeproj/*.perspectivev3
+*.xcodeproj/*.xcworkspace
+*.xcworkspace/
+*.xcuserdata/
+DerivedData/
+*.moved-aside
+# ==========================================
+# Compiled Binaries & Object Files
+# ==========================================
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+*.app/
+# ==========================================
+# Editor & IDE Configs (Optional)
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*~
