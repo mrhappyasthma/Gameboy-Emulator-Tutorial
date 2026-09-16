@@ -3,7 +3,7 @@
 #include "cpu.h"
 
 #include "cartridge.h"
-#include "cartridge-header.h"
+#include "cartridge_header.h"
 
 GameBoy_CPU_t cpu;
 

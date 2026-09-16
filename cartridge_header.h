@@ -99,4 +99,8 @@ typedef struct cartridge_header {
     uint8_t global_checksum[2];
 } Cartridge_Header_t;
 
+/** Returns a pointer to the cartridge header from a given cartridge payload. */
 Cartridge_Header_t *CartridgeHeaderFromCartridge(const uint8_t *cartridge);
+
+/** Prints out the cartridge header bits in human readable way. */
+void print_cartridge_header(const uint8_t *cartridge);

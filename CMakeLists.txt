@@ -18,8 +18,8 @@ set(SOURCES
     main.c
     cartridge.h
     cartridge.c
-    cartridge-header.h
-    cartridge-header.c
+    cartridge_header.h
+    cartridge_header.c
     cpu.h
     cpu.c
     cpu_instruction.h

@@ -17,7 +17,7 @@
 #endif
 
 #import "cartridge.h"
-#import "cartridge-header.h"
+#import "cartridge_header.h"
 #include "tinyfiledialogs.h"
 
 // 1 MB (original gameboy)
@@ -98,41 +98,4 @@ uint8_t *open_cartridge_file(void) {
     }
 
     return NULL;
-}
-
-void print_cartridge_header(const uint8_t *cartridge) {
-    Cartridge_Header_t *header = CartridgeHeaderFromCartridge(cartridge);
-    
-    printf("--- CARTRIDGE HEADER INFO ---\n");
-    printf("Entry Point:      0x%.2X%.2X%.2X%.2X\n",
-           header->entry_point[0], header->entry_point[1],
-           header->entry_point[2], header->entry_point[3]);
-    
-    // Clean string printing for title (forced null-termination safety)
-    char clean_title[16] = {0};
-    snprintf(clean_title, sizeof(clean_title), "%.15s", header->title);
-    printf("Title:            %.11s\n", clean_title);
-    printf("Manufacturer:     %.4s\n", &header->title[11]);
-    printf("Title (full):            %s\n", clean_title);
-    
-    printf("CGB Flag:         0x%.2X (%s)\n", header->cgb_flag,
-           (header->cgb_flag == 0x80) ? "CGB Enhanced" : (header->cgb_flag == 0xC0) ? "CGB Only" : "Non-CGB");
-    
-    printf("New Licensee:     %c%c\n", header->new_licensee_code[0], header->new_licensee_code[1]);
-    printf("SGB Flag:         0x%.2X (%s)\n", header->sgb_flag, (header->sgb_flag == 0x03) ? "SGB Support" : "No SGB");
-    printf("Cartridge Type:   0x%.2X\n", header->cartridge_type);
-    
-    // Calculate and display computed ROM size
-    uint32_t real_rom_size = 32 * (1 << header->rom_size);
-    printf("ROM Size:         0x%.2X (%d KiB)\n", header->rom_size, real_rom_size);
-    printf("RAM Size:         0x%.2X\n", header->ram_size);
-    printf("Destination:      0x%.2X (%s)\n", header->destination_code, (header->destination_code == 0x00) ? "Japan" : "Overseas");
-    printf("Old Licensee:     0x%.2X\n", header->old_licensee_code);
-    printf("Mask ROM Version: 0x%.2X\n", header->mask_rom_version_number);
-    printf("Header Checksum:  0x%.2X\n", header->header_checksum);
-    
-    // Reconstruct the 16-bit big-endian value manually
-    uint16_t global_checksum = (header->global_checksum[0] << 8) | header->global_checksum[1];
-    printf("Global Checksum:  0x%.4X\n", global_checksum);
-    printf("-----------------------------\n");
 }
