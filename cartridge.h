@@ -12,3 +12,5 @@ uint8_t *open_cartridge_file();
 
 /** Prints out the cartridge header bits in human readable way. */
 void print_cartridge_header(const uint8_t *cartridge);
+
+extern uint8_t *current_cartridge;

@@ -19,6 +19,11 @@ set(SOURCES
     cartridge.h
     cartridge.c
     cartridge-header.h
+    cartridge-header.c
+    cpu.h
+    cpu.c
+    cpu_instruction.h
+    cpu_instruction.c
 )
 
 add_executable(emulator ${SOURCES} ${EXTERNAL_SOURCES})

@@ -10,11 +10,11 @@ int main(int argc, char* argv[]) {
         return -1;
     }
     
-    uint8_t *cartridge = open_cartridge_file();
-    if (cartridge != NULL) {
-        print_cartridge_header(cartridge);
+    current_cartridge = open_cartridge_file();
+    if (current_cartridge != NULL) {
+        print_cartridge_header(current_cartridge);
     }
-    free(cartridge);
+    free(current_cartridge);
     
     SDL_Quit();
     

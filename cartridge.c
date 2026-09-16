@@ -23,6 +23,7 @@
 // 1 MB (original gameboy)
 #define MAX_CART_SIZE (1024 * 1024)
 
+uint8_t *current_cartridge = NULL;
 bool cartridge_loaded = false;
 char runtime_path_buffer[AGNOSTIC_MAX_PATH];
 
@@ -100,7 +101,7 @@ uint8_t *open_cartridge_file(void) {
 }
 
 void print_cartridge_header(const uint8_t *cartridge) {
-    cartridge_header *header = (cartridge_header*)(cartridge + CART_ENTRY_POINT);
+    Cartridge_Header_t *header = CartridgeHeaderFromCartridge(cartridge);
     
     printf("--- CARTRIDGE HEADER INFO ---\n");
     printf("Entry Point:      0x%.2X%.2X%.2X%.2X\n",

@@ -2,8 +2,6 @@
 
 #include <stdint.h>
 
-const int CART_ENTRY_POINT = 0x100;
-
 // https://gbdev.io/pandocs/The_Cartridge_Header.html
 typedef struct cartridge_header {
     // 0100-0103 entry point
@@ -99,4 +97,6 @@ typedef struct cartridge_header {
     //
     // NOTE: This checksum is not verified normally, except for Pokemon Stadium's "GB Tower" emulator.
     uint8_t global_checksum[2];
-} cartridge_header;
+} Cartridge_Header_t;
+
+Cartridge_Header_t *CartridgeHeaderFromCartridge(const uint8_t *cartridge);
