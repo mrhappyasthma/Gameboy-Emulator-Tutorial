@@ -2,7 +2,9 @@
 
 #include <stdint.h>
 
-typedef void(*opcode_handler)(void);
+#include "cpu.h"
+
+typedef void(*opcode_handler)(GameBoy_CPU_t *cpu);
 
 typedef struct {
     // The human-readable version of the instruction, primarily for debugging. e.g. "NOP", "LD B, C"

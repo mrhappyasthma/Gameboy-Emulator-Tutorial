@@ -31,6 +31,8 @@ set(SOURCES
     emulator_core.h
     emulator_core.c
     main.c
+    mmu.h
+    mmu.c
 )
 
 add_executable(emulator ${SOURCES} ${EXTERNAL_SOURCES})

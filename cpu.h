@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdbool.h>
 #include <stdint.h>
 
@@ -25,17 +27,24 @@ typedef struct {
     RegisterPair_t pc;
 } GameBoy_CPU_t;
 
-extern GameBoy_CPU_t cpu;
-
 /**
  * We are not emulating the boot rom. Instead, set up the CPU register values
  * that are expected after the boot rom would have executed.
  */
-void cpu_post_bootrom_setup(uint8_t *cartridge);
+void cpu_post_bootrom_setup(GameBoy_CPU_t *cpu, uint8_t *cartridge);
 
 /**
  * Fetches and executes the next instruction.
  *
  * Returns `false` if it encounters an instruction that it cannot execute.
  */
-bool cpu_fetch_and_execute(uint8_t *cartridge);
+bool cpu_fetch_and_execute(GameBoy_CPU_t *cpu, uint8_t *cartridge);
+
+bool cpu_get_zero_flag(GameBoy_CPU_t *cpu);
+void cpu_set_zero_flag(GameBoy_CPU_t *cpu, bool is_set);
+bool cpu_get_subtract_flag(GameBoy_CPU_t *cpu);
+void cpu_set_subtract_flag(GameBoy_CPU_t *cpu, bool is_set);
+bool cpu_get_half_carry_flag(GameBoy_CPU_t *cpu);
+void cpu_set_half_carry_flag(GameBoy_CPU_t *cpu, bool is_set);
+bool cpu_get_carry_flag(GameBoy_CPU_t *cpu);
+void cpu_set_carry_flag(GameBoy_CPU_t *cpu, bool is_set);

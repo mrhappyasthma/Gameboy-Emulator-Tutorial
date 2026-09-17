@@ -4,6 +4,8 @@
 
 extern uint32_t core_clock_counter;
 
+extern uint8_t *current_cartridge;
+
 /** Initializes the emulator state. */
 int core_init(void);
 

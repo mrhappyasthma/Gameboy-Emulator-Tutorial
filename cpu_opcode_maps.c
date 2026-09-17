@@ -13,7 +13,7 @@
 // a16 -> 16-bit memory address
 
 const CPU_Instruction_t cpu_opcode_map[256] = {
-    { "NOP", /*operand_length=*/0, &cpu_noop }, // 0x00
+    { "NOP", /*operand_length=*/0, &cpu_no_op }, // 0x00
     { "LD BC, d16", /*operand_length=*/2, NULL }, // 0x01
     { "LD (BC), A", /*operand_length=*/0, NULL }, // 0x02
     { "INC BC", /*operand_length=*/0, NULL }, // 0x03
@@ -207,6 +207,18 @@ const CPU_Instruction_t cpu_opcode_map[256] = {
     { "CP A", /*operand_length=*/0, NULL }, // 0xBF
     { "RET NZ", /*operand_length=*/0, NULL }, // 0xC0
     { "POP BC", /*operand_length=*/0, NULL }, // 0xC1
+    { "JP NZ, a16", /*operand_length=*/2, &cpu_jump_if_not_zero }, // 0xC2
+    { "JP a16", /*operand_length=*/2, &cpu_unconditional_jump }, // 0xC3
+    { "CALL NZ, a16", /*operand_length=*/2, NULL }, // 0xC4
+    { "PUSH BC", /*operand_length=*/0, NULL }, // 0xC5
+    { "ADD A, d8", /*operand_length=*/1, NULL }, // 0xC6
+    { "RST 0", /*operand_length=*/0, NULL }, // 0xC7
+    { "RET Z", /*operand_length=*/0, NULL }, // 0xC8
+    { "RET", /*operand_length=*/0, NULL }, // 0xC9
+    { "JP Z, a16", /*operand_length=*/2, NULL }, // 0xCA
+    { "", /*operand_length=*/0, NULL }, // 0xCB
+    { "CALL Z, a16", /*operand_length=*/2, NULL }, // 0xCC
+    { "CALL a16", /*operand_length=*/2, NULL }, // 0xCD
     { "ADC A, d8", /*operand_length=*/1, NULL }, // 0xCE
     { "RST 1", /*operand_length=*/0, NULL }, // 0xCF
     { "RET NC", /*operand_length=*/0, NULL }, // 0xD0
