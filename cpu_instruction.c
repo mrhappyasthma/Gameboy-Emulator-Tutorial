@@ -2,523 +2,515 @@
 
 #include "cpu_instruction.h"
 
+// Detailed documentation on the instructions can be found here: https://meganesu.github.io/generate-gb-opcodes/
+
+// d16 -> 16-bit immediate
+// d8 -> 8-bit immediate
+// a16 -> 16-bit memory address
+
 const CPU_Instruction_t instruction_opcode_map[256] = {
-    { "", 0, NULL }, // 0x00
-    { "", 0, NULL }, // 0x01
-    { "", 0, NULL }, // 0x02
-    { "", 0, NULL }, // 0x03
-    { "", 0, NULL }, // 0x04
-    { "", 0, NULL }, // 0x05
-    { "", 0, NULL }, // 0x06
-    { "", 0, NULL }, // 0x07
-    { "", 0, NULL }, // 0x08
-    { "", 0, NULL }, // 0x09
-    { "", 0, NULL }, // 0x0A
-    { "", 0, NULL }, // 0x0B
-    { "", 0, NULL }, // 0x0C
-    { "", 0, NULL }, // 0x0D
-    { "", 0, NULL }, // 0x0E
-    { "", 0, NULL }, // 0x0F
-    { "", 0, NULL }, // 0x10
-    { "", 0, NULL }, // 0x11
-    { "", 0, NULL }, // 0x12
-    { "", 0, NULL }, // 0x13
-    { "", 0, NULL }, // 0x14
-    { "", 0, NULL }, // 0x15
-    { "", 0, NULL }, // 0x16
-    { "", 0, NULL }, // 0x17
-    { "", 0, NULL }, // 0x18
-    { "", 0, NULL }, // 0x19
-    { "", 0, NULL }, // 0x1A
-    { "", 0, NULL }, // 0x1B
-    { "", 0, NULL }, // 0x1C
-    { "", 0, NULL }, // 0x1D
-    { "", 0, NULL }, // 0x1E
-    { "", 0, NULL }, // 0x1F
-    { "", 0, NULL }, // 0x20
-    { "", 0, NULL }, // 0x21
-    { "", 0, NULL }, // 0x22
-    { "", 0, NULL }, // 0x23
-    { "", 0, NULL }, // 0x24
-    { "", 0, NULL }, // 0x25
-    { "", 0, NULL }, // 0x26
-    { "", 0, NULL }, // 0x27
-    { "", 0, NULL }, // 0x28
-    { "", 0, NULL }, // 0x29
-    { "", 0, NULL }, // 0x2A
-    { "", 0, NULL }, // 0x2B
-    { "", 0, NULL }, // 0x2C
-    { "", 0, NULL }, // 0x2D
-    { "", 0, NULL }, // 0x2E
-    { "", 0, NULL }, // 0x2F
-    { "", 0, NULL }, // 0x30
-    { "", 0, NULL }, // 0x31
-    { "", 0, NULL }, // 0x32
-    { "", 0, NULL }, // 0x33
-    { "", 0, NULL }, // 0x34
-    { "", 0, NULL }, // 0x35
-    { "", 0, NULL }, // 0x36
-    { "", 0, NULL }, // 0x37
-    { "", 0, NULL }, // 0x38
-    { "", 0, NULL }, // 0x39
-    { "", 0, NULL }, // 0x3A
-    { "", 0, NULL }, // 0x3B
-    { "", 0, NULL }, // 0x3C
-    { "", 0, NULL }, // 0x3D
-    { "", 0, NULL }, // 0x3E
-    { "", 0, NULL }, // 0x3F
-    { "", 0, NULL }, // 0x40
-    { "", 0, NULL }, // 0x41
-    { "", 0, NULL }, // 0x42
-    { "", 0, NULL }, // 0x43
-    { "", 0, NULL }, // 0x44
-    { "", 0, NULL }, // 0x45
-    { "", 0, NULL }, // 0x46
-    { "", 0, NULL }, // 0x47
-    { "", 0, NULL }, // 0x48
-    { "", 0, NULL }, // 0x49
-    { "", 0, NULL }, // 0x4A
-    { "", 0, NULL }, // 0x4B
-    { "", 0, NULL }, // 0x4C
-    { "", 0, NULL }, // 0x4D
-    { "", 0, NULL }, // 0x4E
-    { "", 0, NULL }, // 0x4F
-    { "", 0, NULL }, // 0x50
-    { "", 0, NULL }, // 0x51
-    { "", 0, NULL }, // 0x52
-    { "", 0, NULL }, // 0x53
-    { "", 0, NULL }, // 0x54
-    { "", 0, NULL }, // 0x55
-    { "", 0, NULL }, // 0x56
-    { "", 0, NULL }, // 0x57
-    { "", 0, NULL }, // 0x58
-    { "", 0, NULL }, // 0x59
-    { "", 0, NULL }, // 0x5A
-    { "", 0, NULL }, // 0x5B
-    { "", 0, NULL }, // 0x5C
-    { "", 0, NULL }, // 0x5D
-    { "", 0, NULL }, // 0x5E
-    { "", 0, NULL }, // 0x5F
-    { "", 0, NULL }, // 0x60
-    { "", 0, NULL }, // 0x61
-    { "", 0, NULL }, // 0x62
-    { "", 0, NULL }, // 0x63
-    { "", 0, NULL }, // 0x64
-    { "", 0, NULL }, // 0x65
-    { "", 0, NULL }, // 0x66
-    { "", 0, NULL }, // 0x67
-    { "", 0, NULL }, // 0x68
-    { "", 0, NULL }, // 0x69
-    { "", 0, NULL }, // 0x6A
-    { "", 0, NULL }, // 0x6B
-    { "", 0, NULL }, // 0x6C
-    { "", 0, NULL }, // 0x6D
-    { "", 0, NULL }, // 0x6E
-    { "", 0, NULL }, // 0x6F
-    { "", 0, NULL }, // 0x70
-    { "", 0, NULL }, // 0x71
-    { "", 0, NULL }, // 0x72
-    { "", 0, NULL }, // 0x73
-    { "", 0, NULL }, // 0x74
-    { "", 0, NULL }, // 0x75
-    { "", 0, NULL }, // 0x76
-    { "", 0, NULL }, // 0x77
-    { "", 0, NULL }, // 0x78
-    { "", 0, NULL }, // 0x79
-    { "", 0, NULL }, // 0x7A
-    { "", 0, NULL }, // 0x7B
-    { "", 0, NULL }, // 0x7C
-    { "", 0, NULL }, // 0x7D
-    { "", 0, NULL }, // 0x7E
-    { "", 0, NULL }, // 0x7F
-    { "", 0, NULL }, // 0x80
-    { "", 0, NULL }, // 0x81
-    { "", 0, NULL }, // 0x82
-    { "", 0, NULL }, // 0x83
-    { "", 0, NULL }, // 0x84
-    { "", 0, NULL }, // 0x85
-    { "", 0, NULL }, // 0x86
-    { "", 0, NULL }, // 0x87
-    { "", 0, NULL }, // 0x88
-    { "", 0, NULL }, // 0x89
-    { "", 0, NULL }, // 0x8A
-    { "", 0, NULL }, // 0x8B
-    { "", 0, NULL }, // 0x8C
-    { "", 0, NULL }, // 0x8D
-    { "", 0, NULL }, // 0x8E
-    { "", 0, NULL }, // 0x8F
-    { "", 0, NULL }, // 0x90
-    { "", 0, NULL }, // 0x91
-    { "", 0, NULL }, // 0x92
-    { "", 0, NULL }, // 0x93
-    { "", 0, NULL }, // 0x94
-    { "", 0, NULL }, // 0x95
-    { "", 0, NULL }, // 0x96
-    { "", 0, NULL }, // 0x97
-    { "", 0, NULL }, // 0x98
-    { "", 0, NULL }, // 0x99
-    { "", 0, NULL }, // 0x9A
-    { "", 0, NULL }, // 0x9B
-    { "", 0, NULL }, // 0x9C
-    { "", 0, NULL }, // 0x9D
-    { "", 0, NULL }, // 0x9E
-    { "", 0, NULL }, // 0x9F
-    { "", 0, NULL }, // 0xA0
-    { "", 0, NULL }, // 0xA1
-    { "", 0, NULL }, // 0xA2
-    { "", 0, NULL }, // 0xA3
-    { "", 0, NULL }, // 0xA4
-    { "", 0, NULL }, // 0xA5
-    { "", 0, NULL }, // 0xA6
-    { "", 0, NULL }, // 0xA7
-    { "", 0, NULL }, // 0xA8
-    { "", 0, NULL }, // 0xA9
-    { "", 0, NULL }, // 0xAA
-    { "", 0, NULL }, // 0xAB
-    { "", 0, NULL }, // 0xAC
-    { "", 0, NULL }, // 0xAD
-    { "", 0, NULL }, // 0xAE
-    { "", 0, NULL }, // 0xAF
-    { "", 0, NULL }, // 0xB0
-    { "", 0, NULL }, // 0xB1
-    { "", 0, NULL }, // 0xB2
-    { "", 0, NULL }, // 0xB3
-    { "", 0, NULL }, // 0xB4
-    { "", 0, NULL }, // 0xB5
-    { "", 0, NULL }, // 0xB6
-    { "", 0, NULL }, // 0xB7
-    { "", 0, NULL }, // 0xB8
-    { "", 0, NULL }, // 0xB9
-    { "", 0, NULL }, // 0xBA
-    { "", 0, NULL }, // 0xBB
-    { "", 0, NULL }, // 0xBC
-    { "", 0, NULL }, // 0xBD
-    { "", 0, NULL }, // 0xBE
-    { "", 0, NULL }, // 0xBF
-    { "", 0, NULL }, // 0xC0
-    { "", 0, NULL }, // 0xC1
-    { "", 0, NULL }, // 0xC2
-    { "", 0, NULL }, // 0xC3
-    { "", 0, NULL }, // 0xC4
-    { "", 0, NULL }, // 0xC5
-    { "", 0, NULL }, // 0xC6
-    { "", 0, NULL }, // 0xC7
-    { "", 0, NULL }, // 0xC8
-    { "", 0, NULL }, // 0xC9
-    { "", 0, NULL }, // 0xCA
-    { "", 0, NULL }, // 0xCB
-    { "", 0, NULL }, // 0xCC
-    { "", 0, NULL }, // 0xCD
-    { "", 0, NULL }, // 0xCE
-    { "", 0, NULL }, // 0xCF
-    { "", 0, NULL }, // 0xD0
-    { "", 0, NULL }, // 0xD1
-    { "", 0, NULL }, // 0xD2
+    { "NOP", /*operand_length=*/0, NULL }, // 0x00
+    { "LD BC, d16", /*operand_length=*/2, NULL }, // 0x01
+    { "LD (BC), A", /*operand_length=*/0, NULL }, // 0x02
+    { "INC BC", /*operand_length=*/0, NULL }, // 0x03
+    { "INC B", /*operand_length=*/0, NULL }, // 0x04
+    { "DEC B", /*operand_length=*/0, NULL }, // 0x05
+    { "LD B, d8", /*operand_length=*/1, NULL }, // 0x06
+    { "RLCA", /*operand_length=*/0, NULL }, // 0x07
+    { "LD (a16), SP", /*operand_length=*/2, NULL }, // 0x08
+    { "ADD HL, BC", /*operand_length=*/0, NULL }, // 0x09
+    { "LD A, (BC)", /*operand_length=*/0, NULL }, // 0x0A
+    { "DEC BC", /*operand_length=*/0, NULL }, // 0x0B
+    { "INC C", /*operand_length=*/0, NULL }, // 0x0C
+    { "DEC C", /*operand_length=*/0, NULL }, // 0x0D
+    { "LD C, d8", /*operand_length=*/1, NULL }, // 0x0E
+    { "RRCA", /*operand_length=*/0, NULL }, // 0x0F
+    { "STOP", /*operand_length=*/0, NULL }, // 0x10
+    { "LD DE, d16", /*operand_length=*/2, NULL }, // 0x11
+    { "LD (DE), A", /*operand_length=*/0, NULL }, // 0x12
+    { "INC DE", /*operand_length=*/0, NULL }, // 0x13
+    { "INC D", /*operand_length=*/0, NULL }, // 0x14
+    { "DEC D", /*operand_length=*/0, NULL }, // 0x15
+    { "LD D, d8", /*operand_length=*/1, NULL }, // 0x16
+    { "RLA", /*operand_length=*/0, NULL }, // 0x17
+    { "JR s8", /*operand_length=*/1, NULL }, // 0x18
+    { "ADD HL, DE", /*operand_length=*/0, NULL }, // 0x19
+    { "LD A, (DE)", /*operand_length=*/0, NULL }, // 0x1A
+    { "DEC DE", /*operand_length=*/0, NULL }, // 0x1B
+    { "INC E", /*operand_length=*/0, NULL }, // 0x1C
+    { "DEC E", /*operand_length=*/0, NULL }, // 0x1D
+    { "LD E, d8", /*operand_length=*/1, NULL }, // 0x1E
+    { "RRA", /*operand_length=*/0, NULL }, // 0x1F
+    { "JR NZ, s8", /*operand_length=*/1, NULL }, // 0x20
+    { "LD HL, d16", /*operand_length=*/2, NULL }, // 0x21
+    { "LD (HL+), A", /*operand_length=*/0, NULL }, // 0x22
+    { "INC HL", /*operand_length=*/0, NULL }, // 0x23
+    { "INC H", /*operand_length=*/0, NULL }, // 0x24
+    { "DEC H", /*operand_length=*/0, NULL }, // 0x25
+    { "LD H, d8", /*operand_length=*/1, NULL }, // 0x26
+    { "DAA", /*operand_length=*/0, NULL }, // 0x27
+    { "JR Z, s8", /*operand_length=*/1, NULL }, // 0x28
+    { "ADD HL, HL", /*operand_length=*/0, NULL }, // 0x29
+    { "LD A, (HL+)", /*operand_length=*/0, NULL }, // 0x2A
+    { "DEC HL", /*operand_length=*/0, NULL }, // 0x2B
+    { "INC L", /*operand_length=*/0, NULL }, // 0x2C
+    { "DEC L", /*operand_length=*/0, NULL }, // 0x2D
+    { "LD L, d8", /*operand_length=*/1, NULL }, // 0x2E
+    { "CPL", /*operand_length=*/0, NULL }, // 0x2F
+    { "JR NC, s8", /*operand_length=*/1, NULL }, // 0x30
+    { "LD SP, d16", /*operand_length=*/2, NULL }, // 0x31
+    { "LD (HL-), A", /*operand_length=*/0, NULL }, // 0x32
+    { "INC SP", /*operand_length=*/0, NULL }, // 0x33
+    { "INC (HL)", /*operand_length=*/0, NULL }, // 0x34
+    { "DEC (HL)", /*operand_length=*/0, NULL }, // 0x35
+    { "LD (HL), d8", /*operand_length=*/1, NULL }, // 0x36
+    { "SCF", /*operand_length=*/0, NULL }, // 0x37
+    { "JR C, s8", /*operand_length=*/1, NULL }, // 0x38
+    { "ADD HL, SP", /*operand_length=*/0, NULL }, // 0x39
+    { "LD A, (HL-)", /*operand_length=*/0, NULL }, // 0x3A
+    { "DEC SP", /*operand_length=*/0, NULL }, // 0x3B
+    { "INC A", /*operand_length=*/0, NULL }, // 0x3C
+    { "DEC A", /*operand_length=*/0, NULL }, // 0x3D
+    { "LD A, d8", /*operand_length=*/1, NULL }, // 0x3E
+    { "CCF", /*operand_length=*/0, NULL }, // 0x3F
+    { "LD B, B", /*operand_length=*/0, NULL }, // 0x40
+    { "LD B, C", /*operand_length=*/0, NULL }, // 0x41
+    { "LD B, D", /*operand_length=*/0, NULL }, // 0x42
+    { "LD B, E", /*operand_length=*/0, NULL }, // 0x43
+    { "LD B, H", /*operand_length=*/0, NULL }, // 0x44
+    { "LD B, L", /*operand_length=*/0, NULL }, // 0x45
+    { "LD B, (HL)", /*operand_length=*/0, NULL }, // 0x46
+    { "LD B, A", /*operand_length=*/0, NULL }, // 0x47
+    { "LD C, B", /*operand_length=*/0, NULL }, // 0x48
+    { "LD C, C", /*operand_length=*/0, NULL }, // 0x49
+    { "LD C, D", /*operand_length=*/0, NULL }, // 0x4A
+    { "LD C, E", /*operand_length=*/0, NULL }, // 0x4B
+    { "LD C, H", /*operand_length=*/0, NULL }, // 0x4C
+    { "LD C, L", /*operand_length=*/0, NULL }, // 0x4D
+    { "LD C, (HL)", /*operand_length=*/0, NULL }, // 0x4E
+    { "LD C, A", /*operand_length=*/0, NULL }, // 0x4F
+    { "LD D, B", /*operand_length=*/0, NULL }, // 0x50
+    { "LD D, C", /*operand_length=*/0, NULL }, // 0x51
+    { "LD D, D", /*operand_length=*/0, NULL }, // 0x52
+    { "LD D, E", /*operand_length=*/0, NULL }, // 0x53
+    { "LD D, H", /*operand_length=*/0, NULL }, // 0x54
+    { "LD D, L", /*operand_length=*/0, NULL }, // 0x55
+    { "LD D, (HL)", /*operand_length=*/0, NULL }, // 0x56
+    { "LD D, A", /*operand_length=*/0, NULL }, // 0x57
+    { "LD E, B", /*operand_length=*/0, NULL }, // 0x58
+    { "LD E, C", /*operand_length=*/0, NULL }, // 0x59
+    { "LD E, D", /*operand_length=*/0, NULL }, // 0x5A
+    { "LD E, E", /*operand_length=*/0, NULL }, // 0x5B
+    { "LD E, H", /*operand_length=*/0, NULL }, // 0x5C
+    { "LD E, L", /*operand_length=*/0, NULL }, // 0x5D
+    { "LD E, (HL)", /*operand_length=*/0, NULL }, // 0x5E
+    { "LD E, A", /*operand_length=*/0, NULL }, // 0x5F
+    { "LD H, B", /*operand_length=*/0, NULL }, // 0x60
+    { "LD H, C", /*operand_length=*/0, NULL }, // 0x61
+    { "LD H, D", /*operand_length=*/0, NULL }, // 0x62
+    { "LD H, E", /*operand_length=*/0, NULL }, // 0x63
+    { "LD H, H", /*operand_length=*/0, NULL }, // 0x64
+    { "LD H, L", /*operand_length=*/0, NULL }, // 0x65
+    { "LD H, (HL)", /*operand_length=*/0, NULL }, // 0x66
+    { "LD H, A", /*operand_length=*/0, NULL }, // 0x67
+    { "LD L, B", /*operand_length=*/0, NULL }, // 0x68
+    { "LD L, C", /*operand_length=*/0, NULL }, // 0x69
+    { "LD L, D", /*operand_length=*/0, NULL }, // 0x6A
+    { "LD L, E", /*operand_length=*/0, NULL }, // 0x6B
+    { "LD L, H", /*operand_length=*/0, NULL }, // 0x6C
+    { "LD L, L", /*operand_length=*/0, NULL }, // 0x6D
+    { "LD L, (HL)", /*operand_length=*/0, NULL }, // 0x6E
+    { "LD L, A", /*operand_length=*/0, NULL }, // 0x6F
+    { "LD (HL), B", /*operand_length=*/0, NULL }, // 0x70
+    { "LD (HL), C", /*operand_length=*/0, NULL }, // 0x71
+    { "LD (HL), D", /*operand_length=*/0, NULL }, // 0x72
+    { "LD (HL), E", /*operand_length=*/0, NULL }, // 0x73
+    { "LD (HL), H", /*operand_length=*/0, NULL }, // 0x74
+    { "LD (HL), L", /*operand_length=*/0, NULL }, // 0x75
+    { "HALT", /*operand_length=*/0, NULL }, // 0x76
+    { "LD (HL), A", /*operand_length=*/0, NULL }, // 0x77
+    { "LD A, B", /*operand_length=*/0, NULL }, // 0x78
+    { "LD A, C", /*operand_length=*/0, NULL }, // 0x79
+    { "LD A, D", /*operand_length=*/0, NULL }, // 0x7A
+    { "LD A, E", /*operand_length=*/0, NULL }, // 0x7B
+    { "LD A, H", /*operand_length=*/0, NULL }, // 0x7C
+    { "LD A, L", /*operand_length=*/0, NULL }, // 0x7D
+    { "LD A, (HL)", /*operand_length=*/0, NULL }, // 0x7E
+    { "LD A, A", /*operand_length=*/0, NULL }, // 0x7F
+    { "ADD A, B", /*operand_length=*/0, NULL }, // 0x80
+    { "ADD A, C", /*operand_length=*/0, NULL }, // 0x81
+    { "ADD A, D", /*operand_length=*/0, NULL }, // 0x82
+    { "ADD A, E", /*operand_length=*/0, NULL }, // 0x83
+    { "ADD A, H", /*operand_length=*/0, NULL }, // 0x84
+    { "ADD A, L", /*operand_length=*/0, NULL }, // 0x85
+    { "ADD A, (HL)", /*operand_length=*/0, NULL }, // 0x86
+    { "ADD A, A", /*operand_length=*/0, NULL }, // 0x87
+    { "ADC A, B", /*operand_length=*/0, NULL }, // 0x88
+    { "ADC A, C", /*operand_length=*/0, NULL }, // 0x89
+    { "ADC A, D", /*operand_length=*/0, NULL }, // 0x8A
+    { "ADC A, E", /*operand_length=*/0, NULL }, // 0x8B
+    { "ADC A, H", /*operand_length=*/0, NULL }, // 0x8C
+    { "ADC A, L", /*operand_length=*/0, NULL }, // 0x8D
+    { "ADC A, (HL)", /*operand_length=*/0, NULL }, // 0x8E
+    { "ADC A, A", /*operand_length=*/0, NULL }, // 0x8F
+    { "SUB B", /*operand_length=*/0, NULL }, // 0x90
+    { "SUB C", /*operand_length=*/0, NULL }, // 0x91
+    { "SUB D", /*operand_length=*/0, NULL }, // 0x92
+    { "SUB E", /*operand_length=*/0, NULL }, // 0x93
+    { "SUB H", /*operand_length=*/0, NULL }, // 0x94
+    { "SUB L", /*operand_length=*/0, NULL }, // 0x95
+    { "SUB (HL)", /*operand_length=*/0, NULL }, // 0x96
+    { "SUB A", /*operand_length=*/0, NULL }, // 0x97
+    { "SBC A, B", /*operand_length=*/0, NULL }, // 0x98
+    { "SBC A, C", /*operand_length=*/0, NULL }, // 0x99
+    { "SBC A, D", /*operand_length=*/0, NULL }, // 0x9A
+    { "SBC A, E", /*operand_length=*/0, NULL }, // 0x9B
+    { "SBC A, H", /*operand_length=*/0, NULL }, // 0x9C
+    { "SBC A, L", /*operand_length=*/0, NULL }, // 0x9D
+    { "SBC A, (HL)", /*operand_length=*/0, NULL }, // 0x9E
+    { "SBC A, A", /*operand_length=*/0, NULL }, // 0x9F
+    { "AND B", /*operand_length=*/0, NULL }, // 0xA0
+    { "AND C", /*operand_length=*/0, NULL }, // 0xA1
+    { "AND D", /*operand_length=*/0, NULL }, // 0xA2
+    { "AND E", /*operand_length=*/0, NULL }, // 0xA3
+    { "AND H", /*operand_length=*/0, NULL }, // 0xA4
+    { "AND L", /*operand_length=*/0, NULL }, // 0xA5
+    { "AND (HL)", /*operand_length=*/0, NULL }, // 0xA6
+    { "AND A", /*operand_length=*/0, NULL }, // 0xA7
+    { "XOR B", /*operand_length=*/0, NULL }, // 0xA8
+    { "XOR C", /*operand_length=*/0, NULL }, // 0xA9
+    { "XOR D", /*operand_length=*/0, NULL }, // 0xAA
+    { "XOR E", /*operand_length=*/0, NULL }, // 0xAB
+    { "XOR H", /*operand_length=*/0, NULL }, // 0xAC
+    { "XOR L", /*operand_length=*/0, NULL }, // 0xAD
+    { "XOR (HL)", /*operand_length=*/0, NULL }, // 0xAE
+    { "XOR A", /*operand_length=*/0, NULL }, // 0xAF
+    { "OR B", /*operand_length=*/0, NULL }, // 0xB0
+    { "OR C", /*operand_length=*/0, NULL }, // 0xB1
+    { "OR D", /*operand_length=*/0, NULL }, // 0xB2
+    { "OR E", /*operand_length=*/0, NULL }, // 0xB3
+    { "OR H", /*operand_length=*/0, NULL }, // 0xB4
+    { "OR L", /*operand_length=*/0, NULL }, // 0xB5
+    { "OR (HL)", /*operand_length=*/0, NULL }, // 0xB6
+    { "OR A", /*operand_length=*/0, NULL }, // 0xB7
+    { "CP B", /*operand_length=*/0, NULL }, // 0xB8
+    { "CP C", /*operand_length=*/0, NULL }, // 0xB9
+    { "CP D", /*operand_length=*/0, NULL }, // 0xBA
+    { "CP E", /*operand_length=*/0, NULL }, // 0xBB
+    { "CP H", /*operand_length=*/0, NULL }, // 0xBC
+    { "CP L", /*operand_length=*/0, NULL }, // 0xBD
+    { "CP (HL)", /*operand_length=*/0, NULL }, // 0xBE
+    { "CP A", /*operand_length=*/0, NULL }, // 0xBF
+    { "RET NZ", /*operand_length=*/0, NULL }, // 0xC0
+    { "POP BC", /*operand_length=*/0, NULL }, // 0xC1
+    { "ADC A, d8", /*operand_length=*/1, NULL }, // 0xCE
+    { "RST 1", /*operand_length=*/0, NULL }, // 0xCF
+    { "RET NC", /*operand_length=*/0, NULL }, // 0xD0
+    { "POP DE", /*operand_length=*/0, NULL }, // 0xD1
+    { "JP NC, a16", /*operand_length=*/2, NULL }, // 0xD2
     { "", 0, NULL }, // 0xD3
-    { "", 0, NULL }, // 0xD4
-    { "", 0, NULL }, // 0xD5
-    { "", 0, NULL }, // 0xD6
-    { "", 0, NULL }, // 0xD7
-    { "", 0, NULL }, // 0xD8
-    { "", 0, NULL }, // 0xD9
-    { "", 0, NULL }, // 0xDA
+    { "CALL NC, a16", /*operand_length=*/2, NULL }, // 0xD4
+    { "PUSH DE", /*operand_length=*/0, NULL }, // 0xD5
+    { "SUB d8", /*operand_length=*/1, NULL }, // 0xD6
+    { "RST 2", /*operand_length=*/0, NULL }, // 0xD7
+    { "RET C", /*operand_length=*/0, NULL }, // 0xD8
+    { "RETI", /*operand_length=*/0, NULL }, // 0xD9
+    { "JP C, a16", /*operand_length=*/2, NULL }, // 0xDA
     { "", 0, NULL }, // 0xDB
-    { "", 0, NULL }, // 0xDC
+    { "CALL C, a16", /*operand_length=*/2, NULL }, // 0xDC
     { "", 0, NULL }, // 0xDD
-    { "", 0, NULL }, // 0xDE
-    { "", 0, NULL }, // 0xDF
-    { "", 0, NULL }, // 0xE0
-    { "", 0, NULL }, // 0xE1
-    { "", 0, NULL }, // 0xE2
+    { "SBC A, d8", /*operand_length=*/1, NULL }, // 0xDE
+    { "RST 3", /*operand_length=*/0, NULL }, // 0xDF
+    { "LD (a8), A", /*operand_length=*/1, NULL }, // 0xE0
+    { "POP HL", /*operand_length=*/0, NULL }, // 0xE1
+    { "LD (C), A", /*operand_length=*/0, NULL }, // 0xE2
     { "", 0, NULL }, // 0xE3
     { "", 0, NULL }, // 0xE4
-    { "", 0, NULL }, // 0xE5
-    { "", 0, NULL }, // 0xE6
-    { "", 0, NULL }, // 0xE7
-    { "", 0, NULL }, // 0xE8
-    { "", 0, NULL }, // 0xE9
-    { "", 0, NULL }, // 0xEA
+    { "PUSH HL", /*operand_length=*/0, NULL }, // 0xE5
+    { "AND d8", /*operand_length=*/1, NULL }, // 0xE6
+    { "RST 4", /*operand_length=*/0, NULL }, // 0xE7
+    { "ADD SP, s8", /*operand_length=*/1, NULL }, // 0xE8
+    { "JP HL", /*operand_length=*/0, NULL }, // 0xE9
+    { "LD (a16), A", /*operand_length=*/2, NULL }, // 0xEA
     { "", 0, NULL }, // 0xEB
     { "", 0, NULL }, // 0xEC
     { "", 0, NULL }, // 0xED
-    { "", 0, NULL }, // 0xEE
-    { "", 0, NULL }, // 0xEF
-    { "", 0, NULL }, // 0xF0
-    { "", 0, NULL }, // 0xF1
-    { "", 0, NULL }, // 0xF2
-    { "", 0, NULL }, // 0xF3
+    { "XOR d8", /*operand_length=*/1, NULL }, // 0xEE
+    { "RST 5", /*operand_length=*/0, NULL }, // 0xEF
+    { "LD A, (a8)", /*operand_length=*/1, NULL }, // 0xF0
+    { "POP AF", /*operand_length=*/0, NULL }, // 0xF1
+    { "LD A, (C)", /*operand_length=*/0, NULL }, // 0xF2
+    { "DI", /*operand_length=*/0, NULL }, // 0xF3
     { "", 0, NULL }, // 0xF4
-    { "", 0, NULL }, // 0xF5
-    { "", 0, NULL }, // 0xF6
-    { "", 0, NULL }, // 0xF7
-    { "", 0, NULL }, // 0xF8
-    { "", 0, NULL }, // 0xF9
-    { "", 0, NULL }, // 0xFA
-    { "", 0, NULL }, // 0xFB
+    { "PUSH AF", /*operand_length=*/0, NULL }, // 0xF5
+    { "OR d8", /*operand_length=*/1, NULL }, // 0xF6
+    { "RST 6", /*operand_length=*/0, NULL }, // 0xF7
+    { "LD HL, SP+s8", /*operand_length=*/1, NULL }, // 0xF8
+    { "LD SP, HL", /*operand_length=*/0, NULL }, // 0xF9
+    { "LD A, (a16)", /*operand_length=*/2, NULL }, // 0xFA
+    { "EI", /*operand_length=*/0, NULL }, // 0xFB
     { "", 0, NULL }, // 0xFC
     { "", 0, NULL }, // 0xFD
-    { "", 0, NULL }, // 0xFE
-    { "", 0, NULL }  // 0xFF
+    { "CP d8", /*operand_length=*/1, NULL }, // 0xFE
+    { "RST 7", /*operand_length=*/0, NULL } // 0xFF
 };
 
-
-// TODO
 const CPU_Instruction_t extended_instruction_opcode_map[256] = {
-    { "", 0, NULL }, // 0x00
-    { "", 0, NULL }, // 0x01
-    { "", 0, NULL }, // 0x02
-    { "", 0, NULL }, // 0x03
-    { "", 0, NULL }, // 0x04
-    { "", 0, NULL }, // 0x05
-    { "", 0, NULL }, // 0x06
-    { "", 0, NULL }, // 0x07
-    { "", 0, NULL }, // 0x08
-    { "", 0, NULL }, // 0x09
-    { "", 0, NULL }, // 0x0A
-    { "", 0, NULL }, // 0x0B
-    { "", 0, NULL }, // 0x0C
-    { "", 0, NULL }, // 0x0D
-    { "", 0, NULL }, // 0x0E
-    { "", 0, NULL }, // 0x0F
-    { "", 0, NULL }, // 0x10
-    { "", 0, NULL }, // 0x11
-    { "", 0, NULL }, // 0x12
-    { "", 0, NULL }, // 0x13
-    { "", 0, NULL }, // 0x14
-    { "", 0, NULL }, // 0x15
-    { "", 0, NULL }, // 0x16
-    { "", 0, NULL }, // 0x17
-    { "", 0, NULL }, // 0x18
-    { "", 0, NULL }, // 0x19
-    { "", 0, NULL }, // 0x1A
-    { "", 0, NULL }, // 0x1B
-    { "", 0, NULL }, // 0x1C
-    { "", 0, NULL }, // 0x1D
-    { "", 0, NULL }, // 0x1E
-    { "", 0, NULL }, // 0x1F
-    { "", 0, NULL }, // 0x20
-    { "", 0, NULL }, // 0x21
-    { "", 0, NULL }, // 0x22
-    { "", 0, NULL }, // 0x23
-    { "", 0, NULL }, // 0x24
-    { "", 0, NULL }, // 0x25
-    { "", 0, NULL }, // 0x26
-    { "", 0, NULL }, // 0x27
-    { "", 0, NULL }, // 0x28
-    { "", 0, NULL }, // 0x29
-    { "", 0, NULL }, // 0x2A
-    { "", 0, NULL }, // 0x2B
-    { "", 0, NULL }, // 0x2C
-    { "", 0, NULL }, // 0x2D
-    { "", 0, NULL }, // 0x2E
-    { "", 0, NULL }, // 0x2F
-    { "", 0, NULL }, // 0x30
-    { "", 0, NULL }, // 0x31
-    { "", 0, NULL }, // 0x32
-    { "", 0, NULL }, // 0x33
-    { "", 0, NULL }, // 0x34
-    { "", 0, NULL }, // 0x35
-    { "", 0, NULL }, // 0x36
-    { "", 0, NULL }, // 0x37
-    { "", 0, NULL }, // 0x38
-    { "", 0, NULL }, // 0x39
-    { "", 0, NULL }, // 0x3A
-    { "", 0, NULL }, // 0x3B
-    { "", 0, NULL }, // 0x3C
-    { "", 0, NULL }, // 0x3D
-    { "", 0, NULL }, // 0x3E
-    { "", 0, NULL }, // 0x3F
-    { "", 0, NULL }, // 0x40
-    { "", 0, NULL }, // 0x41
-    { "", 0, NULL }, // 0x42
-    { "", 0, NULL }, // 0x43
-    { "", 0, NULL }, // 0x44
-    { "", 0, NULL }, // 0x45
-    { "", 0, NULL }, // 0x46
-    { "", 0, NULL }, // 0x47
-    { "", 0, NULL }, // 0x48
-    { "", 0, NULL }, // 0x49
-    { "", 0, NULL }, // 0x4A
-    { "", 0, NULL }, // 0x4B
-    { "", 0, NULL }, // 0x4C
-    { "", 0, NULL }, // 0x4D
-    { "", 0, NULL }, // 0x4E
-    { "", 0, NULL }, // 0x4F
-    { "", 0, NULL }, // 0x50
-    { "", 0, NULL }, // 0x51
-    { "", 0, NULL }, // 0x52
-    { "", 0, NULL }, // 0x53
-    { "", 0, NULL }, // 0x54
-    { "", 0, NULL }, // 0x55
-    { "", 0, NULL }, // 0x56
-    { "", 0, NULL }, // 0x57
-    { "", 0, NULL }, // 0x58
-    { "", 0, NULL }, // 0x59
-    { "", 0, NULL }, // 0x5A
-    { "", 0, NULL }, // 0x5B
-    { "", 0, NULL }, // 0x5C
-    { "", 0, NULL }, // 0x5D
-    { "", 0, NULL }, // 0x5E
-    { "", 0, NULL }, // 0x5F
-    { "", 0, NULL }, // 0x60
-    { "", 0, NULL }, // 0x61
-    { "", 0, NULL }, // 0x62
-    { "", 0, NULL }, // 0x63
-    { "", 0, NULL }, // 0x64
-    { "", 0, NULL }, // 0x65
-    { "", 0, NULL }, // 0x66
-    { "", 0, NULL }, // 0x67
-    { "", 0, NULL }, // 0x68
-    { "", 0, NULL }, // 0x69
-    { "", 0, NULL }, // 0x6A
-    { "", 0, NULL }, // 0x6B
-    { "", 0, NULL }, // 0x6C
-    { "", 0, NULL }, // 0x6D
-    { "", 0, NULL }, // 0x6E
-    { "", 0, NULL }, // 0x6F
-    { "", 0, NULL }, // 0x70
-    { "", 0, NULL }, // 0x71
-    { "", 0, NULL }, // 0x72
-    { "", 0, NULL }, // 0x73
-    { "", 0, NULL }, // 0x74
-    { "", 0, NULL }, // 0x75
-    { "", 0, NULL }, // 0x76
-    { "", 0, NULL }, // 0x77
-    { "", 0, NULL }, // 0x78
-    { "", 0, NULL }, // 0x79
-    { "", 0, NULL }, // 0x7A
-    { "", 0, NULL }, // 0x7B
-    { "", 0, NULL }, // 0x7C
-    { "", 0, NULL }, // 0x7D
-    { "", 0, NULL }, // 0x7E
-    { "", 0, NULL }, // 0x7F
-    { "", 0, NULL }, // 0x80
-    { "", 0, NULL }, // 0x81
-    { "", 0, NULL }, // 0x82
-    { "", 0, NULL }, // 0x83
-    { "", 0, NULL }, // 0x84
-    { "", 0, NULL }, // 0x85
-    { "", 0, NULL }, // 0x86
-    { "", 0, NULL }, // 0x87
-    { "", 0, NULL }, // 0x88
-    { "", 0, NULL }, // 0x89
-    { "", 0, NULL }, // 0x8A
-    { "", 0, NULL }, // 0x8B
-    { "", 0, NULL }, // 0x8C
-    { "", 0, NULL }, // 0x8D
-    { "", 0, NULL }, // 0x8E
-    { "", 0, NULL }, // 0x8F
-    { "", 0, NULL }, // 0x90
-    { "", 0, NULL }, // 0x91
-    { "", 0, NULL }, // 0x92
-    { "", 0, NULL }, // 0x93
-    { "", 0, NULL }, // 0x94
-    { "", 0, NULL }, // 0x95
-    { "", 0, NULL }, // 0x96
-    { "", 0, NULL }, // 0x97
-    { "", 0, NULL }, // 0x98
-    { "", 0, NULL }, // 0x99
-    { "", 0, NULL }, // 0x9A
-    { "", 0, NULL }, // 0x9B
-    { "", 0, NULL }, // 0x9C
-    { "", 0, NULL }, // 0x9D
-    { "", 0, NULL }, // 0x9E
-    { "", 0, NULL }, // 0x9F
-    { "", 0, NULL }, // 0xA0
-    { "", 0, NULL }, // 0xA1
-    { "", 0, NULL }, // 0xA2
-    { "", 0, NULL }, // 0xA3
-    { "", 0, NULL }, // 0xA4
-    { "", 0, NULL }, // 0xA5
-    { "", 0, NULL }, // 0xA6
-    { "", 0, NULL }, // 0xA7
-    { "", 0, NULL }, // 0xA8
-    { "", 0, NULL }, // 0xA9
-    { "", 0, NULL }, // 0xAA
-    { "", 0, NULL }, // 0xAB
-    { "", 0, NULL }, // 0xAC
-    { "", 0, NULL }, // 0xAD
-    { "", 0, NULL }, // 0xAE
-    { "", 0, NULL }, // 0xAF
-    { "", 0, NULL }, // 0xB0
-    { "", 0, NULL }, // 0xB1
-    { "", 0, NULL }, // 0xB2
-    { "", 0, NULL }, // 0xB3
-    { "", 0, NULL }, // 0xB4
-    { "", 0, NULL }, // 0xB5
-    { "", 0, NULL }, // 0xB6
-    { "", 0, NULL }, // 0xB7
-    { "", 0, NULL }, // 0xB8
-    { "", 0, NULL }, // 0xB9
-    { "", 0, NULL }, // 0xBA
-    { "", 0, NULL }, // 0xBB
-    { "", 0, NULL }, // 0xBC
-    { "", 0, NULL }, // 0xBD
-    { "", 0, NULL }, // 0xBE
-    { "", 0, NULL }, // 0xBF
-    { "", 0, NULL }, // 0xC0
-    { "", 0, NULL }, // 0xC1
-    { "", 0, NULL }, // 0xC2
-    { "", 0, NULL }, // 0xC3
-    { "", 0, NULL }, // 0xC4
-    { "", 0, NULL }, // 0xC5
-    { "", 0, NULL }, // 0xC6
-    { "", 0, NULL }, // 0xC7
-    { "", 0, NULL }, // 0xC8
-    { "", 0, NULL }, // 0xC9
-    { "", 0, NULL }, // 0xCA
-    { "", 0, NULL }, // 0xCB
-    { "", 0, NULL }, // 0xCC
-    { "", 0, NULL }, // 0xCD
-    { "", 0, NULL }, // 0xCE
-    { "", 0, NULL }, // 0xCF
-    { "", 0, NULL }, // 0xD0
-    { "", 0, NULL }, // 0xD1
-    { "", 0, NULL }, // 0xD2
-    { "", 0, NULL }, // 0xD3
-    { "", 0, NULL }, // 0xD4
-    { "", 0, NULL }, // 0xD5
-    { "", 0, NULL }, // 0xD6
-    { "", 0, NULL }, // 0xD7
-    { "", 0, NULL }, // 0xD8
-    { "", 0, NULL }, // 0xD9
-    { "", 0, NULL }, // 0xDA
-    { "", 0, NULL }, // 0xDB
-    { "", 0, NULL }, // 0xDC
-    { "", 0, NULL }, // 0xDD
-    { "", 0, NULL }, // 0xDE
-    { "", 0, NULL }, // 0xDF
-    { "", 0, NULL }, // 0xE0
-    { "", 0, NULL }, // 0xE1
-    { "", 0, NULL }, // 0xE2
-    { "", 0, NULL }, // 0xE3
-    { "", 0, NULL }, // 0xE4
-    { "", 0, NULL }, // 0xE5
-    { "", 0, NULL }, // 0xE6
-    { "", 0, NULL }, // 0xE7
-    { "", 0, NULL }, // 0xE8
-    { "", 0, NULL }, // 0xE9
-    { "", 0, NULL }, // 0xEA
-    { "", 0, NULL }, // 0xEB
-    { "", 0, NULL }, // 0xEC
-    { "", 0, NULL }, // 0xED
-    { "", 0, NULL }, // 0xEE
-    { "", 0, NULL }, // 0xEF
-    { "", 0, NULL }, // 0xF0
-    { "", 0, NULL }, // 0xF1
-    { "", 0, NULL }, // 0xF2
-    { "", 0, NULL }, // 0xF3
-    { "", 0, NULL }, // 0xF4
-    { "", 0, NULL }, // 0xF5
-    { "", 0, NULL }, // 0xF6
-    { "", 0, NULL }, // 0xF7
-    { "", 0, NULL }, // 0xF8
-    { "", 0, NULL }, // 0xF9
-    { "", 0, NULL }, // 0xFA
-    { "", 0, NULL }, // 0xFB
-    { "", 0, NULL }, // 0xFC
-    { "", 0, NULL }, // 0xFD
-    { "", 0, NULL }, // 0xFE
-    { "", 0, NULL }  // 0xFF
+    { "RLC B", /*operand_length=*/0, NULL }, // 0x00
+    { "RLC C", /*operand_length=*/0, NULL }, // 0x01
+    { "RLC D", /*operand_length=*/0, NULL }, // 0x02
+    { "RLC E", /*operand_length=*/0, NULL }, // 0x03
+    { "RLC H", /*operand_length=*/0, NULL }, // 0x04
+    { "RLC L", /*operand_length=*/0, NULL }, // 0x05
+    { "RLC (HL)", /*operand_length=*/0, NULL }, // 0x06
+    { "RLC A", /*operand_length=*/0, NULL }, // 0x07
+    { "RRC B", /*operand_length=*/0, NULL }, // 0x08
+    { "RRC C", /*operand_length=*/0, NULL }, // 0x09
+    { "RRC D", /*operand_length=*/0, NULL }, // 0x0A
+    { "RRC E", /*operand_length=*/0, NULL }, // 0x0B
+    { "RRC H", /*operand_length=*/0, NULL }, // 0x0C
+    { "RRC L", /*operand_length=*/0, NULL }, // 0x0D
+    { "RRC (HL)", /*operand_length=*/0, NULL }, // 0x0E
+    { "RRC A", /*operand_length=*/0, NULL }, // 0x0F
+    { "RL B", /*operand_length=*/0, NULL }, // 0x10
+    { "RL C", /*operand_length=*/0, NULL }, // 0x11
+    { "RL D", /*operand_length=*/0, NULL }, // 0x12
+    { "RL E", /*operand_length=*/0, NULL }, // 0x13
+    { "RL H", /*operand_length=*/0, NULL }, // 0x14
+    { "RL L", /*operand_length=*/0, NULL }, // 0x15
+    { "RL (HL)", /*operand_length=*/0, NULL }, // 0x16
+    { "RL A", /*operand_length=*/0, NULL }, // 0x17
+    { "RR B", /*operand_length=*/0, NULL }, // 0x18
+    { "RR C", /*operand_length=*/0, NULL }, // 0x19
+    { "RR D", /*operand_length=*/0, NULL }, // 0x1A
+    { "RR E", /*operand_length=*/0, NULL }, // 0x1B
+    { "RR H", /*operand_length=*/0, NULL }, // 0x1C
+    { "RR L", /*operand_length=*/0, NULL }, // 0x1D
+    { "RR (HL)", /*operand_length=*/0, NULL }, // 0x1E
+    { "RR A", /*operand_length=*/0, NULL }, // 0x1F
+    { "SLA B", /*operand_length=*/0, NULL }, // 0x20
+    { "SLA C", /*operand_length=*/0, NULL }, // 0x21
+    { "SLA D", /*operand_length=*/0, NULL }, // 0x22
+    { "SLA E", /*operand_length=*/0, NULL }, // 0x23
+    { "SLA H", /*operand_length=*/0, NULL }, // 0x24
+    { "SLA L", /*operand_length=*/0, NULL }, // 0x25
+    { "SLA (HL)", /*operand_length=*/0, NULL }, // 0x26
+    { "SLA A", /*operand_length=*/0, NULL }, // 0x27
+    { "SRA B", /*operand_length=*/0, NULL }, // 0x28
+    { "SRA C", /*operand_length=*/0, NULL }, // 0x29
+    { "SRA D", /*operand_length=*/0, NULL }, // 0x2A
+    { "SRA E", /*operand_length=*/0, NULL }, // 0x2B
+    { "SRA H", /*operand_length=*/0, NULL }, // 0x2C
+    { "SRA L", /*operand_length=*/0, NULL }, // 0x2D
+    { "SRA (HL)", /*operand_length=*/0, NULL }, // 0x2E
+    { "SRA A", /*operand_length=*/0, NULL }, // 0x2F
+    { "SWAP B", /*operand_length=*/0, NULL }, // 0x30
+    { "SWAP C", /*operand_length=*/0, NULL }, // 0x31
+    { "SWAP D", /*operand_length=*/0, NULL }, // 0x32
+    { "SWAP E", /*operand_length=*/0, NULL }, // 0x33
+    { "SWAP H", /*operand_length=*/0, NULL }, // 0x34
+    { "SWAP L", /*operand_length=*/0, NULL }, // 0x35
+    { "SWAP (HL)", /*operand_length=*/0, NULL }, // 0x36
+    { "SWAP A", /*operand_length=*/0, NULL }, // 0x37
+    { "SRL B", /*operand_length=*/0, NULL }, // 0x38
+    { "SRL C", /*operand_length=*/0, NULL }, // 0x39
+    { "SRL D", /*operand_length=*/0, NULL }, // 0x3A
+    { "SRL E", /*operand_length=*/0, NULL }, // 0x3B
+    { "SRL H", /*operand_length=*/0, NULL }, // 0x3C
+    { "SRL L", /*operand_length=*/0, NULL }, // 0x3D
+    { "SRL (HL)", /*operand_length=*/0, NULL }, // 0x3E
+    { "SRL A", /*operand_length=*/0, NULL }, // 0x3F
+    { "BIT 0, B", /*operand_length=*/0, NULL }, // 0x40
+    { "BIT 0, C", /*operand_length=*/0, NULL }, // 0x41
+    { "BIT 0, D", /*operand_length=*/0, NULL }, // 0x42
+    { "BIT 0, E", /*operand_length=*/0, NULL }, // 0x43
+    { "BIT 0, H", /*operand_length=*/0, NULL }, // 0x44
+    { "BIT 0, L", /*operand_length=*/0, NULL }, // 0x45
+    { "BIT 0, (HL)", /*operand_length=*/0, NULL }, // 0x46
+    { "BIT 0, A", /*operand_length=*/0, NULL }, // 0x47
+    { "BIT 1, B", /*operand_length=*/0, NULL }, // 0x48
+    { "BIT 1, C", /*operand_length=*/0, NULL }, // 0x49
+    { "BIT 1, D", /*operand_length=*/0, NULL }, // 0x4A
+    { "BIT 1, E", /*operand_length=*/0, NULL }, // 0x4B
+    { "BIT 1, H", /*operand_length=*/0, NULL }, // 0x4C
+    { "BIT 1, L", /*operand_length=*/0, NULL }, // 0x4D
+    { "BIT 1, (HL)", /*operand_length=*/0, NULL }, // 0x4E
+    { "BIT 1, A", /*operand_length=*/0, NULL }, // 0x4F
+    { "BIT 2, B", /*operand_length=*/0, NULL }, // 0x50
+    { "BIT 2, C", /*operand_length=*/0, NULL }, // 0x51
+    { "BIT 2, D", /*operand_length=*/0, NULL }, // 0x52
+    { "BIT 2, E", /*operand_length=*/0, NULL }, // 0x53
+    { "BIT 2, H", /*operand_length=*/0, NULL }, // 0x54
+    { "BIT 2, L", /*operand_length=*/0, NULL }, // 0x55
+    { "BIT 2, (HL)", /*operand_length=*/0, NULL }, // 0x56
+    { "BIT 2, A", /*operand_length=*/0, NULL }, // 0x57
+    { "BIT 3, B", /*operand_length=*/0, NULL }, // 0x58
+    { "BIT 3, C", /*operand_length=*/0, NULL }, // 0x59
+    { "BIT 3, D", /*operand_length=*/0, NULL }, // 0x5A
+    { "BIT 3, E", /*operand_length=*/0, NULL }, // 0x5B
+    { "BIT 3, H", /*operand_length=*/0, NULL }, // 0x5C
+    { "BIT 3, L", /*operand_length=*/0, NULL }, // 0x5D
+    { "BIT 3, (HL)", /*operand_length=*/0, NULL }, // 0x5E
+    { "BIT 3, A", /*operand_length=*/0, NULL }, // 0x5F
+    { "BIT 4, B", /*operand_length=*/0, NULL }, // 0x60
+    { "BIT 4, C", /*operand_length=*/0, NULL }, // 0x61
+    { "BIT 4, D", /*operand_length=*/0, NULL }, // 0x62
+    { "BIT 4, E", /*operand_length=*/0, NULL }, // 0x63
+    { "BIT 4, H", /*operand_length=*/0, NULL }, // 0x64
+    { "BIT 4, L", /*operand_length=*/0, NULL }, // 0x65
+    { "BIT 4, (HL)", /*operand_length=*/0, NULL }, // 0x66
+    { "BIT 4, A", /*operand_length=*/0, NULL }, // 0x67
+    { "BIT 5, B", /*operand_length=*/0, NULL }, // 0x68
+    { "BIT 5, C", /*operand_length=*/0, NULL }, // 0x69
+    { "BIT 5, D", /*operand_length=*/0, NULL }, // 0x6A
+    { "BIT 5, E", /*operand_length=*/0, NULL }, // 0x6B
+    { "BIT 5, H", /*operand_length=*/0, NULL }, // 0x6C
+    { "BIT 5, L", /*operand_length=*/0, NULL }, // 0x6D
+    { "BIT 5, (HL)", /*operand_length=*/0, NULL }, // 0x6E
+    { "BIT 5, A", /*operand_length=*/0, NULL }, // 0x6F
+    { "BIT 6, B", /*operand_length=*/0, NULL }, // 0x70
+    { "BIT 6, C", /*operand_length=*/0, NULL }, // 0x71
+    { "BIT 6, D", /*operand_length=*/0, NULL }, // 0x72
+    { "BIT 6, E", /*operand_length=*/0, NULL }, // 0x73
+    { "BIT 6, H", /*operand_length=*/0, NULL }, // 0x74
+    { "BIT 6, L", /*operand_length=*/0, NULL }, // 0x75
+    { "BIT 6, (HL)", /*operand_length=*/0, NULL }, // 0x76
+    { "BIT 6, A", /*operand_length=*/0, NULL }, // 0x77
+    { "BIT 7, B", /*operand_length=*/0, NULL }, // 0x78
+    { "BIT 7, C", /*operand_length=*/0, NULL }, // 0x79
+    { "BIT 7, D", /*operand_length=*/0, NULL }, // 0x7A
+    { "BIT 7, E", /*operand_length=*/0, NULL }, // 0x7B
+    { "BIT 7, H", /*operand_length=*/0, NULL }, // 0x7C
+    { "BIT 7, L", /*operand_length=*/0, NULL }, // 0x7D
+    { "BIT 7, (HL)", /*operand_length=*/0, NULL }, // 0x7E
+    { "BIT 7, A", /*operand_length=*/0, NULL }, // 0x7F
+    { "RES 0, B", /*operand_length=*/0, NULL }, // 0x80
+    { "RES 0, C", /*operand_length=*/0, NULL }, // 0x81
+    { "RES 0, D", /*operand_length=*/0, NULL }, // 0x82
+    { "RES 0, E", /*operand_length=*/0, NULL }, // 0x83
+    { "RES 0, H", /*operand_length=*/0, NULL }, // 0x84
+    { "RES 0, L", /*operand_length=*/0, NULL }, // 0x85
+    { "RES 0, (HL)", /*operand_length=*/0, NULL }, // 0x86
+    { "RES 0, A", /*operand_length=*/0, NULL }, // 0x87
+    { "RES 1, B", /*operand_length=*/0, NULL }, // 0x88
+    { "RES 1, C", /*operand_length=*/0, NULL }, // 0x89
+    { "RES 1, D", /*operand_length=*/0, NULL }, // 0x8A
+    { "RES 1, E", /*operand_length=*/0, NULL }, // 0x8B
+    { "RES 1, H", /*operand_length=*/0, NULL }, // 0x8C
+    { "RES 1, L", /*operand_length=*/0, NULL }, // 0x8D
+    { "RES 1, (HL)", /*operand_length=*/0, NULL }, // 0x8E
+    { "RES 1, A", /*operand_length=*/0, NULL }, // 0x8F
+    { "RES 2, B", /*operand_length=*/0, NULL }, // 0x90
+    { "RES 2, C", /*operand_length=*/0, NULL }, // 0x91
+    { "RES 2, D", /*operand_length=*/0, NULL }, // 0x92
+    { "RES 2, E", /*operand_length=*/0, NULL }, // 0x93
+    { "RES 2, H", /*operand_length=*/0, NULL }, // 0x94
+    { "RES 2, L", /*operand_length=*/0, NULL }, // 0x95
+    { "RES 2, (HL)", /*operand_length=*/0, NULL }, // 0x96
+    { "RES 2, A", /*operand_length=*/0, NULL }, // 0x97
+    { "RES 3, B", /*operand_length=*/0, NULL }, // 0x98
+    { "RES 3, C", /*operand_length=*/0, NULL }, // 0x99
+    { "RES 3, D", /*operand_length=*/0, NULL }, // 0x9A
+    { "RES 3, E", /*operand_length=*/0, NULL }, // 0x9B
+    { "RES 3, H", /*operand_length=*/0, NULL }, // 0x9C
+    { "RES 3, L", /*operand_length=*/0, NULL }, // 0x9D
+    { "RES 3, (HL)", /*operand_length=*/0, NULL }, // 0x9E
+    { "RES 3, A", /*operand_length=*/0, NULL }, // 0x9F
+    { "RES 4, B", /*operand_length=*/0, NULL }, // 0xA0
+    { "RES 4, C", /*operand_length=*/0, NULL }, // 0xA1
+    { "RES 4, D", /*operand_length=*/0, NULL }, // 0xA2
+    { "RES 4, E", /*operand_length=*/0, NULL }, // 0xA3
+    { "RES 4, H", /*operand_length=*/0, NULL }, // 0xA4
+    { "RES 4, L", /*operand_length=*/0, NULL }, // 0xA5
+    { "RES 4, (HL)", /*operand_length=*/0, NULL }, // 0xA6
+    { "RES 4, A", /*operand_length=*/0, NULL }, // 0xA7
+    { "RES 5, B", /*operand_length=*/0, NULL }, // 0xA8
+    { "RES 5, C", /*operand_length=*/0, NULL }, // 0xA9
+    { "RES 5, D", /*operand_length=*/0, NULL }, // 0xAA
+    { "RES 5, E", /*operand_length=*/0, NULL }, // 0xAB
+    { "RES 5, H", /*operand_length=*/0, NULL }, // 0xAC
+    { "RES 5, L", /*operand_length=*/0, NULL }, // 0xAD
+    { "RES 5, (HL)", /*operand_length=*/0, NULL }, // 0xAE
+    { "RES 5, A", /*operand_length=*/0, NULL }, // 0xAF
+    { "RES 6, B", /*operand_length=*/0, NULL }, // 0xB0
+    { "RES 6, C", /*operand_length=*/0, NULL }, // 0xB1
+    { "RES 6, D", /*operand_length=*/0, NULL }, // 0xB2
+    { "RES 6, E", /*operand_length=*/0, NULL }, // 0xB3
+    { "RES 6, H", /*operand_length=*/0, NULL }, // 0xB4
+    { "RES 6, L", /*operand_length=*/0, NULL }, // 0xB5
+    { "RES 6, (HL)", /*operand_length=*/0, NULL }, // 0xB6
+    { "RES 6, A", /*operand_length=*/0, NULL }, // 0xB7
+    { "RES 7, B", /*operand_length=*/0, NULL }, // 0xB8
+    { "RES 7, C", /*operand_length=*/0, NULL }, // 0xB9
+    { "RES 7, D", /*operand_length=*/0, NULL }, // 0xBA
+    { "RES 7, E", /*operand_length=*/0, NULL }, // 0xBB
+    { "RES 7, H", /*operand_length=*/0, NULL }, // 0xBC
+    { "RES 7, L", /*operand_length=*/0, NULL }, // 0xBD
+    { "RES 7, (HL)", /*operand_length=*/0, NULL }, // 0xBE
+    { "RES 7, A", /*operand_length=*/0, NULL }, // 0xBF
+    { "SET 0, B", /*operand_length=*/0, NULL }, // 0xC0
+    { "SET 0, C", /*operand_length=*/0, NULL }, // 0xC1
+    { "SET 0, D", /*operand_length=*/0, NULL }, // 0xC2
+    { "SET 0, E", /*operand_length=*/0, NULL }, // 0xC3
+    { "SET 0, H", /*operand_length=*/0, NULL }, // 0xC4
+    { "SET 0, L", /*operand_length=*/0, NULL }, // 0xC5
+    { "SET 0, (HL)", /*operand_length=*/0, NULL }, // 0xC6
+    { "SET 0, A", /*operand_length=*/0, NULL }, // 0xC7
+    { "SET 1, B", /*operand_length=*/0, NULL }, // 0xC8
+    { "SET 1, C", /*operand_length=*/0, NULL }, // 0xC9
+    { "SET 1, D", /*operand_length=*/0, NULL }, // 0xCA
+    { "SET 1, E", /*operand_length=*/0, NULL }, // 0xCB
+    { "SET 1, H", /*operand_length=*/0, NULL }, // 0xCC
+    { "SET 1, L", /*operand_length=*/0, NULL }, // 0xCD
+    { "SET 1, (HL)", /*operand_length=*/0, NULL }, // 0xCE
+    { "SET 1, A", /*operand_length=*/0, NULL }, // 0xCF
+    { "SET 2, B", /*operand_length=*/0, NULL }, // 0xD0
+    { "SET 2, C", /*operand_length=*/0, NULL }, // 0xD1
+    { "SET 2, D", /*operand_length=*/0, NULL }, // 0xD2
+    { "SET 2, E", /*operand_length=*/0, NULL }, // 0xD3
+    { "SET 2, H", /*operand_length=*/0, NULL }, // 0xD4
+    { "SET 2, L", /*operand_length=*/0, NULL }, // 0xD5
+    { "SET 2, (HL)", /*operand_length=*/0, NULL }, // 0xD6
+    { "SET 2, A", /*operand_length=*/0, NULL }, // 0xD7
+    { "SET 3, B", /*operand_length=*/0, NULL }, // 0xD8
+    { "SET 3, C", /*operand_length=*/0, NULL }, // 0xD9
+    { "SET 3, D", /*operand_length=*/0, NULL }, // 0xDA
+    { "SET 3, E", /*operand_length=*/0, NULL }, // 0xDB
+    { "SET 3, H", /*operand_length=*/0, NULL }, // 0xDC
+    { "SET 3, L", /*operand_length=*/0, NULL }, // 0xDD
+    { "SET 3, (HL)", /*operand_length=*/0, NULL }, // 0xDE
+    { "SET 3, A", /*operand_length=*/0, NULL }, // 0xDF
+    { "SET 4, B", /*operand_length=*/0, NULL }, // 0xE0
+    { "SET 4, C", /*operand_length=*/0, NULL }, // 0xE1
+    { "SET 4, D", /*operand_length=*/0, NULL }, // 0xE2
+    { "SET 4, E", /*operand_length=*/0, NULL }, // 0xE3
+    { "SET 4, H", /*operand_length=*/0, NULL }, // 0xE4
+    { "SET 4, L", /*operand_length=*/0, NULL }, // 0xE5
+    { "SET 4, (HL)", /*operand_length=*/0, NULL }, // 0xE6
+    { "SET 4, A", /*operand_length=*/0, NULL }, // 0xE7
+    { "SET 5, B", /*operand_length=*/0, NULL }, // 0xE8
+    { "SET 5, C", /*operand_length=*/0, NULL }, // 0xE9
+    { "SET 5, D", /*operand_length=*/0, NULL }, // 0xEA
+    { "SET 5, E", /*operand_length=*/0, NULL }, // 0xEB
+    { "SET 5, H", /*operand_length=*/0, NULL }, // 0xEC
+    { "SET 5, L", /*operand_length=*/0, NULL }, // 0xED
+    { "SET 5, (HL)", /*operand_length=*/0, NULL }, // 0xEE
+    { "SET 5, A", /*operand_length=*/0, NULL }, // 0xEF
+    { "SET 6, B", /*operand_length=*/0, NULL }, // 0xF0
+    { "SET 6, C", /*operand_length=*/0, NULL }, // 0xF1
+    { "SET 6, D", /*operand_length=*/0, NULL }, // 0xF2
+    { "SET 6, E", /*operand_length=*/0, NULL }, // 0xF3
+    { "SET 6, H", /*operand_length=*/0, NULL }, // 0xF4
+    { "SET 6, L", /*operand_length=*/0, NULL }, // 0xF5
+    { "SET 6, (HL)", /*operand_length=*/0, NULL }, // 0xF6
+    { "SET 6, A", /*operand_length=*/0, NULL }, // 0xF7
+    { "SET 7, B", /*operand_length=*/0, NULL }, // 0xF8
+    { "SET 7, C", /*operand_length=*/0, NULL }, // 0xF9
+    { "SET 7, D", /*operand_length=*/0, NULL }, // 0xFA
+    { "SET 7, E", /*operand_length=*/0, NULL }, // 0xFB
+    { "SET 7, H", /*operand_length=*/0, NULL }, // 0xFC
+    { "SET 7, L", /*operand_length=*/0, NULL }, // 0xFD
+    { "SET 7, (HL)", /*operand_length=*/0, NULL }, // 0xFE
+    { "SET 7, A", /*operand_length=*/0, NULL } // 0xFF
 };
 
