@@ -4,8 +4,16 @@
 
 extern uint32_t core_clock_counter;
 
-int core_init();
-void core_run();
-void core_shutdown();
+/** Initializes the emulator state. */
+int core_init(void);
 
-void core_advance_cpu_clock(uint8_t ticks);
+/** Runs the main emulator loop. */
+void core_run(void);
+
+/** Gracefully cleans up the emulator. */
+void core_shutdown(void);
+
+/**
+ * Advances the emulator clock by T-cycle (ticks). NOTE: there are 4 ticks in a CPU instruction (M-cycle).
+ */
+void core_advance_clock(uint8_t ticks);

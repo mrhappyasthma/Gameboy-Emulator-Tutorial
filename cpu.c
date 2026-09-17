@@ -5,7 +5,7 @@
 
 #include "cartridge.h"
 #include "cartridge_header.h"
-#include "cpu_instruction.h"
+#include "cpu_opcode_maps.h"
 
 GameBoy_CPU_t cpu;
 
@@ -17,7 +17,7 @@ static CPU_Instruction_t fetch_instruction(uint8_t *cartridge) {
     uint8_t op_code = cartridge[cpu.pc.value];
     cpu.pc.value++;
     
-    const CPU_Instruction_t instruction = instruction_opcode_map[op_code];
+    const CPU_Instruction_t instruction = cpu_opcode_map[op_code];
     return instruction;
 }
 

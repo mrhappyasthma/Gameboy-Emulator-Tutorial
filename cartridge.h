@@ -8,4 +8,4 @@
  *
  * WARNING: The memory is allocated with `malloc` and must be freed by the caller.
  */
-uint8_t *open_cartridge_file();
+uint8_t *open_cartridge_file(void);

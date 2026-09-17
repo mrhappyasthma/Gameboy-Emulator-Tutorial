@@ -2,7 +2,7 @@
 
 #include <stdint.h>
 
-typedef void(*opcode_handler)();
+typedef void(*opcode_handler)(void);
 
 typedef struct {
     // The human-readable version of the instruction, primarily for debugging. e.g. "NOP", "LD B, C"
@@ -14,8 +14,3 @@ typedef struct {
     // Function pointer memory address for handling this instruction.
     opcode_handler handler;
 } CPU_Instruction_t;
-
-// A lookup table using the 8-bit op code (0x00 - 0xFF).
-// NOTE: opcode `0xCB` indicates that "extended" instructions
-extern const CPU_Instruction_t instruction_opcode_map[256];
-extern const CPU_Instruction_t extended_instruction_opcode_map[256];

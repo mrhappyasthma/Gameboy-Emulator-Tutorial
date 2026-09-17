@@ -15,7 +15,6 @@ set(EXTERNAL_SOURCES
 )
 
 set(SOURCES
-    main.c
     cartridge.h
     cartridge.c
     cartridge_header.h
@@ -23,9 +22,15 @@ set(SOURCES
     cpu.h
     cpu.c
     cpu_instruction.h
-    cpu_instruction.c
+    cpu_instruction_handlers.h
+    cpu_instruction_handlers.c
+    cpu_extended_instruction_handlers.h
+    cpu_extended_instruction_handlers.c
+    cpu_opcode_maps.h
+    cpu_opcode_maps.c
     emulator_core.h
     emulator_core.c
+    main.c
 )
 
 add_executable(emulator ${SOURCES} ${EXTERNAL_SOURCES})

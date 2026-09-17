@@ -1,4 +1,8 @@
+#include "cpu_opcode_maps.h"
+
+#include "cpu_extended_instruction_handlers.h"
 #include "cpu_instruction.h"
+#include "cpu_instruction_handlers.h"
 
 #include <stddef.h>
 
@@ -8,8 +12,8 @@
 // d8 -> 8-bit immediate
 // a16 -> 16-bit memory address
 
-const CPU_Instruction_t instruction_opcode_map[256] = {
-    { "NOP", /*operand_length=*/0, NULL }, // 0x00
+const CPU_Instruction_t cpu_opcode_map[256] = {
+    { "NOP", /*operand_length=*/0, &cpu_noop }, // 0x00
     { "LD BC, d16", /*operand_length=*/2, NULL }, // 0x01
     { "LD (BC), A", /*operand_length=*/0, NULL }, // 0x02
     { "INC BC", /*operand_length=*/0, NULL }, // 0x03
@@ -255,7 +259,7 @@ const CPU_Instruction_t instruction_opcode_map[256] = {
     { "RST 7", /*operand_length=*/0, NULL } // 0xFF
 };
 
-const CPU_Instruction_t extended_instruction_opcode_map[256] = {
+const CPU_Instruction_t cpu_extended_opcode_map[256] = {
     { "RLC B", /*operand_length=*/0, NULL }, // 0x00
     { "RLC C", /*operand_length=*/0, NULL }, // 0x01
     { "RLC D", /*operand_length=*/0, NULL }, // 0x02

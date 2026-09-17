@@ -15,7 +15,7 @@ static bool quit_requested = false;
 
 uint32_t core_clock_counter = 0;
 
-int core_init() {
+int core_init(void) {
     current_cartridge = open_cartridge_file();
     if (current_cartridge == NULL) {
         SDL_Log("Cartridge could not be opened.");
@@ -27,7 +27,7 @@ int core_init() {
     return 0;
 }
 
-void core_run() {
+void core_run(void) {
     cpu_post_bootrom_setup(current_cartridge);
 
     while (!quit_requested) {
@@ -39,10 +39,10 @@ void core_run() {
     
 }
 
-void core_shutdown() {
+void core_shutdown(void) {
     free(current_cartridge);
 }
 
-void core_advance_cpu_clock(uint8_t ticks) {
+void core_advance_clock(uint8_t ticks) {
     core_clock_counter += ticks;
 }

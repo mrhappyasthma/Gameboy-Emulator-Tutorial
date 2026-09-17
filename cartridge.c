@@ -31,7 +31,7 @@
 bool cartridge_loaded = false;
 char runtime_path_buffer[AGNOSTIC_MAX_PATH];
 
-static bool get_runtime_path() {
+static bool get_runtime_path(void) {
 #if defined(_WIN32)
     // Corrected Windows syntax: (BufferLength, BufferPointer)
     if (GetCurrentDirectoryA(AGNOSTIC_MAX_PATH, runtime_path_buffer) == 0) {
