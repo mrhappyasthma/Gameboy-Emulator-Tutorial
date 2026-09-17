@@ -2,6 +2,8 @@
 
 #include <stdint.h>
 
+typedef void(*opcode_handler)();
+
 typedef struct {
     // The human-readable version of the instruction, primarily for debugging. e.g. "NOP", "LD B, C"
     char *disassembly;
@@ -10,7 +12,7 @@ typedef struct {
     uint8_t operand_length;
     
     // Function pointer memory address for handling this instruction.
-    void *execute;
+    opcode_handler handler;
 } CPU_Instruction_t;
 
 // A lookup table using the 8-bit op code (0x00 - 0xFF).

@@ -1,7 +1,7 @@
 #include <stdint.h>
 
 typedef union {
-    uint16_t reg; // The full 16-bit register value
+    uint16_t value; // The full 16-bit register value
     
     struct {
 #if defined(__BYTE_ORDER__) && __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
@@ -20,8 +20,16 @@ typedef struct {
     RegisterPair_t de;
     RegisterPair_t hl;
     
-    uint16_t sp;
-    uint16_t pc;
+    RegisterPair_t sp;
+    RegisterPair_t pc;
 } GameBoy_CPU_t;
 
 extern GameBoy_CPU_t cpu;
+
+/**
+ * We are not emulating the boot rom. Instead, set up the CPU register values
+ * that are expected after the boot rom would have executed.
+ */
+void cpu_post_bootrom_setup(uint8_t *cartridge);
+
+void cpu_fetch_and_execute(uint8_t *cartridge);

@@ -1,12 +1,15 @@
+#include <errno.h>
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #if defined(_WIN32) || defined(_WIN64)
     #include <windows.h>
     #define AGNOSTIC_MAX_PATH MAX_PATH
 #else
     #include <unistd.h>
+    #include <sys/param.h>
     
     #if defined(PATH_MAX)
         #define AGNOSTIC_MAX_PATH PATH_MAX
@@ -16,14 +19,13 @@
     #endif
 #endif
 
-#import "cartridge.h"
-#import "cartridge_header.h"
+#include "cartridge.h"
+#include "cartridge_header.h"
 #include "tinyfiledialogs.h"
 
 // 1 MB (original gameboy)
 #define MAX_CART_SIZE (1024 * 1024)
 
-uint8_t *current_cartridge = NULL;
 bool cartridge_loaded = false;
 char runtime_path_buffer[AGNOSTIC_MAX_PATH];
 
@@ -38,6 +40,7 @@ static bool get_runtime_path() {
 #else
     // POSIX syntax: (BufferPointer, BufferLength)
     if (getcwd(runtime_path_buffer, AGNOSTIC_MAX_PATH) == NULL) {
+        printf("DEBUG: getcwd failed! Reason: %s (errno: %d)\n", strerror(errno), errno);
         return false;
     }
     return true;

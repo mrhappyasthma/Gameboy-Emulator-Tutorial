@@ -4,6 +4,7 @@
 
 #include "cartridge.h"
 #include "cartridge_header.h"
+#include "cpu.h"
 
 int main(int argc, char* argv[]) {
     if (!SDL_Init(SDL_INIT_VIDEO)) {
@@ -11,13 +12,20 @@ int main(int argc, char* argv[]) {
         return -1;
     }
     
-    current_cartridge = open_cartridge_file();
-    if (current_cartridge != NULL) {
-        print_cartridge_header(current_cartridge);
+    uint8_t *cartridge = open_cartridge_file();
+    if (cartridge == NULL) {
+        SDL_Log("Cartridge could not be opened.");
+        SDL_Quit();
+        return 1;
     }
-    free(current_cartridge);
+    
+    print_cartridge_header(cartridge);
+    
+    cpu_post_bootrom_setup(cartridge);
+    cpu_fetch_and_execute(cartridge);
+    
+    free(cartridge);
     
     SDL_Quit();
-    
     return 0;
 }

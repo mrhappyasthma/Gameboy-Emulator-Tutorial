@@ -9,5 +9,3 @@
  * WARNING: The memory is allocated with `malloc` and must be freed by the caller.
  */
 uint8_t *open_cartridge_file();
-
-extern uint8_t *current_cartridge;
