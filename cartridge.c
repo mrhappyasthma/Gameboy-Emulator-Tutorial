@@ -1,3 +1,5 @@
+#include "cartridge.h"
+
 #include <errno.h>
 #include <limits.h>
 #include <stdio.h>
@@ -19,7 +21,7 @@
     #endif
 #endif
 
-#include "cartridge.h"
+
 #include "cartridge_header.h"
 #include "tinyfiledialogs.h"
 

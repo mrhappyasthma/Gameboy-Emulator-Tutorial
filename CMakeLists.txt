@@ -24,6 +24,8 @@ set(SOURCES
     cpu.c
     cpu_instruction.h
     cpu_instruction.c
+    emulator_core.h
+    emulator_core.c
 )
 
 add_executable(emulator ${SOURCES} ${EXTERNAL_SOURCES})

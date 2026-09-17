@@ -1,7 +1,7 @@
+#include "cpu.h"
+
 #include <SDL3/SDL.h>
 #include <stdlib.h>
-
-#include "cpu.h"
 
 #include "cartridge.h"
 #include "cartridge_header.h"
@@ -21,15 +21,16 @@ static CPU_Instruction_t fetch_instruction(uint8_t *cartridge) {
     return instruction;
 }
 
-static void execute_instruction(CPU_Instruction_t instruction) {
+static bool execute_instruction(CPU_Instruction_t instruction) {
     opcode_handler handler = instruction.handler;
     if (handler == NULL) {
         SDL_Log("Unknown instruction at: %04X (%s), count: %i", cpu.pc.value,
                 instruction.disassembly, cpu_instruction_counter);
-        return;
+        return false;
     }
     
     handler();
+    return true;
 }
 
 void cpu_post_bootrom_setup(uint8_t *cartridge) {
@@ -54,7 +55,7 @@ void cpu_post_bootrom_setup(uint8_t *cartridge) {
     cpu.pc.value = 0x0100;  // Entry point in the cartridge header to start execution from.
 }
 
-void cpu_fetch_and_execute(uint8_t *cartridge) {
+bool cpu_fetch_and_execute(uint8_t *cartridge) {
     CPU_Instruction_t instruction = fetch_instruction(cartridge);
-    execute_instruction(instruction);
+    return execute_instruction(instruction);
 }

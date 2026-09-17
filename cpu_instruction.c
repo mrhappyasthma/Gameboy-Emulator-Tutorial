@@ -1,6 +1,6 @@
-#include <stddef.h>
-
 #include "cpu_instruction.h"
+
+#include <stddef.h>
 
 // Detailed documentation on the instructions can be found here: https://meganesu.github.io/generate-gb-opcodes/
 

@@ -1,10 +1,7 @@
 #include <SDL3/SDL.h>
 #include <SDL3/SDL_main.h>
-#include <stdlib.h>
 
-#include "cartridge.h"
-#include "cartridge_header.h"
-#include "cpu.h"
+#include "emulator_core.h"
 
 int main(int argc, char* argv[]) {
     if (!SDL_Init(SDL_INIT_VIDEO)) {
@@ -12,20 +9,15 @@ int main(int argc, char* argv[]) {
         return -1;
     }
     
-    uint8_t *cartridge = open_cartridge_file();
-    if (cartridge == NULL) {
-        SDL_Log("Cartridge could not be opened.");
+    int error = core_init();
+    if (error != 0) {
         SDL_Quit();
-        return 1;
+        return error;
     }
     
-    print_cartridge_header(cartridge);
+    core_run();
     
-    cpu_post_bootrom_setup(cartridge);
-    cpu_fetch_and_execute(cartridge);
-    
-    free(cartridge);
-    
+    core_shutdown();
     SDL_Quit();
     return 0;
 }

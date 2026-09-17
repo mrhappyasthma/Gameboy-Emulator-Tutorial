@@ -1,6 +1,6 @@
-#include <SDL3/SDL.h>
-
 #include "cartridge_header.h"
+
+#include <SDL3/SDL.h>
 
 const int CART_ENTRY_POINT = 0x100;
 

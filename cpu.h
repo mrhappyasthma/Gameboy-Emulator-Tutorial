@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdint.h>
 
 typedef union {
@@ -32,4 +33,9 @@ extern GameBoy_CPU_t cpu;
  */
 void cpu_post_bootrom_setup(uint8_t *cartridge);
 
-void cpu_fetch_and_execute(uint8_t *cartridge);
+/**
+ * Fetches and executes the next instruction.
+ *
+ * Returns `false` if it encounters an instruction that it cannot execute.
+ */
+bool cpu_fetch_and_execute(uint8_t *cartridge);
